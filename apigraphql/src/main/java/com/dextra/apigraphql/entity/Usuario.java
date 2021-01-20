@@ -14,7 +14,14 @@ public class Usuario {
 
     private String nome;
 
-    private Long idade;
+    private Integer idade;
+
+    public Usuario() { }
+
+    public Usuario(String nome, Integer idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
 
     public long getId() {
         return id;
@@ -24,7 +31,7 @@ public class Usuario {
         return nome;
     }
 
-    public long getIdade() {
+    public Integer getIdade() {
         return idade;
     }
 
@@ -36,7 +43,7 @@ public class Usuario {
         this.id = id;
     }
 
-    public void setIdade(long idade) {
+    public void setIdade(Integer idade) {
         this.idade = idade;
     }
 }

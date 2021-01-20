@@ -6,6 +6,8 @@ import com.dextra.apigraphql.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class MutationResolver implements GraphQLMutationResolver {
 
@@ -13,14 +15,26 @@ public class MutationResolver implements GraphQLMutationResolver {
     private UsuarioRepository usuarioRepository;
 
     public Usuario criarUsuario(String nome, int idade) {
-        return null;
+        return usuarioRepository.save(new Usuario(nome, idade));
     }
 
-    public Usuario alterarUsuario(long id, String nome, int idade) {
-        return null;
+    public Usuario alterarNomeUsuario(long id, String nome) {
+        Optional<Usuario> oldUsuario = usuarioRepository.findById(id);
+        if (oldUsuario.isPresent()) {
+            Usuario usuario = oldUsuario.get();
+            usuario.setNome(nome);
+            usuarioRepository.save(usuario);
+            return usuario;
+        } else
+            return null;
     }
 
     public String deletarUsuario(long id) {
-        return "";
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            usuarioRepository.delete(usuario.get());
+            return "Usuário deletado!";
+        } else
+            return "Usuário não encontrado!";
     }
 }

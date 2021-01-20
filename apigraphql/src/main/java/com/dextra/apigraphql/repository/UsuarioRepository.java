@@ -11,8 +11,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
     List<Usuario> findByNome(String nome);
 
-    List<Usuario> findByIdade(Long idade);
+    List<Usuario> findByIdade(Integer idade);
 
-    List<String> findNomeByIdade(Long idade);
+    List<String> findNomeByIdade(Integer idade);
 
 }
