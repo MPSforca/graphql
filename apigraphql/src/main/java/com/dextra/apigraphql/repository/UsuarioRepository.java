@@ -1,18 +1,18 @@
-package br.com.dextra.apirest1.repository;
+package com.dextra.apigraphql.repository;
 
-import org.springframework.stereotype.Repository;
-
-import br.com.dextra.apirest1.entity.Usuario;
-
+import com.dextra.apigraphql.entity.Usuario;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
+public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
     List<Usuario> findByNome(String nome);
+
     List<Usuario> findByIdade(Long idade);
+
     List<String> findNomeByIdade(Long idade);
 
 }

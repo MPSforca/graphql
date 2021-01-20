@@ -1,4 +1,4 @@
-package br.com.dextra.apirest1.entity;
+package com.dextra.apigraphql.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
