@@ -3,6 +3,7 @@ package com.dextra.apigraphql.resolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.dextra.apigraphql.entity.Usuario;
 import com.dextra.apigraphql.repository.UsuarioRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +19,12 @@ public class QueryResolver implements GraphQLQueryResolver {
         return (List<Usuario>) usuarioRepository.findAll();
     }
 
-    public Usuario getUsuario(Long id) {
+    public Usuario getUsuario(Long id) throws NotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
 
         if (usuario.isPresent())
             return usuario.get();
         else
-            return null;
+            throw new NotFoundException("Usuário não encontrado!");
     }
 }

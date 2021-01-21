@@ -3,6 +3,7 @@ package com.dextra.apigraphql.resolver;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.dextra.apigraphql.entity.Usuario;
 import com.dextra.apigraphql.repository.UsuarioRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class MutationResolver implements GraphQLMutationResolver {
         return usuarioRepository.save(new Usuario(nome, idade));
     }
 
-    public Usuario alterarNomeUsuario(long id, String nome) {
+    public Usuario alterarNomeUsuario(long id, String nome) throws NotFoundException {
         Optional<Usuario> oldUsuario = usuarioRepository.findById(id);
         if (oldUsuario.isPresent()) {
             Usuario usuario = oldUsuario.get();
@@ -26,15 +27,15 @@ public class MutationResolver implements GraphQLMutationResolver {
             usuarioRepository.save(usuario);
             return usuario;
         } else
-            return null;
+            throw new NotFoundException("Usuário não encontrado!");
     }
 
-    public String deletarUsuario(long id) {
+    public String deletarUsuario(long id) throws NotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
             usuarioRepository.delete(usuario.get());
             return "Usuário deletado!";
         } else
-            return "Usuário não encontrado!";
+            throw new NotFoundException("Usuário não encontrado!");
     }
 }
